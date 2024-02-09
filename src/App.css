@@ -20,7 +20,7 @@ body {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 10%, 80% 10%;
+  grid-template-rows: 10% 40% 40% 10%;
   grid-template-areas: "header header header" "sidebar main main" "sidebar content section" "footer footer footer";
 }
 
