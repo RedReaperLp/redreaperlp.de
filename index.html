@@ -28,14 +28,123 @@
             </div>
         </div>
     </div>
-    <div class="info">Lorem ipsum</div>
-    <div class="main">This is some stupid stuff</div>
-    <div class="section">But it is also cool</div>
-    <div class="footer">LOL</div>
+    <div style="display: flex;justify-content: center;">
+        <div class="card left_aligned right_card myself">
+            <div class="card-content">
+                <div class="card-title">About Me</div>
+                <div class="card-text">
+                    <p>
+                        Hello! I am Raphael, a 18 years old student currently attending high school
+                        and working towards my "Abitur". I've been deeply involved in programming for about two and a
+                        half years now. It started as a hobby but quickly evolved into a passion.
+                    </p>
+                    <hr>
+                    <p>
+                        One of my favorite hobbies is playing Minecraft. I enjoy immersing myself in the creative world
+                        of
+                        building and programming there. I'm particularly fascinated by Redstone engineering and love
+                        constructing complex circuits and machines. Minecraft provides me with the opportunity to bring
+                        my
+                        creative ideas to life and apply my programming skills in a practical way.
+                    </p>
+                    <hr>
+                    <p>
+                        In addition to playing Minecraft, I also enjoy delving into the development of Discord bots. The
+                        ability to create interactive bots and deploy them on Discord servers fascinates me. It's
+                        exciting
+                        to see how bots can enhance communication and provide helpful features to users.
+                    </p>
+                    <hr>
+                    <p>
+                        In my free time, I like to explore new programming projects, whether it's game development, web
+                        applications, or other software solutions. The world of programming offers endless opportunities
+                        to
+                        be creative and solve problems. I look forward to further honing my skills and embarking on new
+                        exciting projects.
+                    </p>
+                </div>
+            </div>
+            <canvas style="border-radius: 10px; margin-left: 5rem" height="400px" id="matrix"></canvas>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="footer-text">© 2024 RedReaperLp</div>
+    </div>
 </div>
-</body>
-<script>
+<script type="module">
+    setTimeout(() => {
+        import("/src/main.jsx");
+    }, 2000)
 
+    const cards = document.querySelectorAll('.card');
+
+    const observer = new IntersectionObserver(entries => {
+        console.log(entries);
+        entries.forEach(entry => {
+            const card = entry.target;
+            card.classList.toggle('show', entry.isIntersecting);
+            if (entry.isIntersecting) {
+                observer.unobserve(card);
+            }
+        })
+    }, {
+        threshold: 0.2
+    });
+
+    cards.forEach(card => {
+        observer.observe(card);
+    });
+
+    const ctx = matrix.getContext('2d');
+    ctx.font = '20px monospace';
+    const columns = matrix.width / 20;
+
+    const drops = [];
+    for (let i = 0; i < columns; i++) {
+        drops[i] = Math.floor(Math.random() * matrix.height);
+    }
+
+
+    function draw() {
+        ctx.fillStyle = "rgba(37, 33, 34, 0.4)";
+        ctx.fillRect(0, 0, matrix.width, matrix.height);
+        ctx.fillStyle = '#0f0';
+        for (let i = 0; i < drops.length; i++) {
+            ctx.fillStyle = '#0f0';
+            ctx.fillText(String.fromCharCode(Math.floor(Math.random() * 128)), i * 20, drops[i] * 20);
+            if (drops[i] * 20 > matrix.height && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+            drops[i]++;
+        }
+    }
+
+    //calc orientation
+    let orientation = window.screen.orientation.type;
+    console.log(orientation);
+
+    if (orientation !== 'landscape-primary') {
+        console.log('removing canvas');
+        matrix.remove();
+    } else {
+        const myself = document.querySelector('.myself');
+        const matrix = document.getElementById('matrix');
+
+        if (window.screen.orientation.type !== 'landscape-primary' || window.innerWidth < 800) {
+            matrix.remove();
+        }
+
+        let inl = setInterval(draw, 40);
+        window.addEventListener('resize', () => {
+            if (window.screen.orientation.type !== 'landscape-primary' || window.innerWidth < 800) {
+                matrix.remove();
+                clearInterval(inl);
+            } else if (!myself.contains(matrix)) {
+                myself.appendChild(matrix);
+                inl = setInterval(draw, 40);
+            }
+        });
+    }
 </script>
-<script type="module" src="/src/main.jsx"></script>
+</body>
 </html>

@@ -1,9 +1,11 @@
 
 function App() {
     return (
-        <>
-            <h1></h1>
-        </>
+        <div style={{marginTop: "50px"}}>
+            MOIN
+            <br></br>
+            MOIN
+        </div>
     )
 }
 
