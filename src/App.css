@@ -1,51 +1,149 @@
-body {
-  background-color: var(--background);
-  color: var(--text);
-}
-
-* {
+:root {
   --background: #242424;
-  --text: #f0f0f0;
   --primary: #ff5722;
+  --text: #f0f0f0;
+  --logo-grid-width: 100px;
+  --logo-width: 64px;
+  --name-grid-width: 200px;
+  --socials-grid-width: calc(100% - var(--logo-grid-width) - var(--name-grid-width));
 }
 @media (prefers-color-scheme: light) {
-  * {
+  :root {
     --background: #f0f0f0;
     --text: #242424;
   }
 }
 
+html {
+  height: 100%;
+  width: 100%;
+}
+html a {
+  text-decoration: none;
+  color: var(--text);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text);
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: "Valera Round", sans-serif;
+}
+
 .container {
-  height: 100vh;
+  height: 100%;
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 10% 40% 40% 10%;
-  grid-template-areas: "header header header" "sidebar main main" "sidebar content section" "footer footer footer";
+  grid-template-columns: repeat(3, 33.34%);
+  grid-template-rows: 12% 41.5% 41.5% 5%;
+  grid-template-areas: "header header header" "info main main" "info section section" "footer footer footer";
+  transition: all 0.5s ease-in-out;
 }
 
 .header {
+  background: #005500;
   grid-area: header;
+  display: grid;
+  grid-template-columns: var(--logo-grid-width) var(--name-grid-width) var(--socials-grid-width);
+  grid-template-areas: "logo name socials";
+}
+.header .logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-area: logo;
+}
+.header .logo img {
+  width: var(--logo-width);
+  height: var(--logo-width);
+  border-radius: 15%;
+}
+.header .socials {
+  display: grid;
+  grid-area: socials;
+  margin-right: 1rem;
+  justify-content: right;
+  grid-template-columns: repeat(3, 150px);
+  grid-template-areas: "discord youtube twitch";
+}
+.header .socials .social {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 1rem;
+  margin-right: 0.5rem;
+  font-size: 1.2rem;
+}
+.header .socials .social .social-logo {
+  width: calc(var(--logo-width) - 32px);
+  height: calc(var(--logo-width) - 32px);
+  margin-right: 10px;
+}
+.header .socials .discord {
+  grid-area: discord;
+}
+.header .socials .youtube {
+  grid-area: youtube;
+}
+.header .socials .twitch {
+  grid-area: twitch;
+}
+.header .name {
+  grid-area: name;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: calc(var(--logo-width) * 0.5);
+}
+.header .nav {
+  grid-area: nav;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
-.sidebar {
-  grid-area: sidebar;
+.info {
+  background: #550000;
+  grid-area: info;
 }
 
 .main {
+  background: #005555;
   grid-area: main;
 }
 
-.content {
-  grid-area: content;
-}
-
 .section {
+  background: #550055;
   grid-area: section;
 }
 
 .footer {
+  background: #555500;
   grid-area: footer;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --logo-grid-width: 60px;
+    --logo-width: 48px;
+    --name-grid-width: 160px;
+    --socials-grid-width: calc(100% - var(--logo-grid-width) - var(--name-grid-width));
+  }
+  .socials {
+    grid-template-columns: 100% !important;
+    grid-template-rows: repeat(3, 33%) !important;
+    grid-template-areas: "discord" "youtube" "twitch" !important;
+  }
+  .socials .social {
+    display: flex !important;
+    align-content: center !important;
+    justify-content: end !important;
+  }
+  .container {
+    grid-template-rows: 20% 37.5% 37.5% 5%;
+  }
 }
 
 /*# sourceMappingURL=App.css.map */
