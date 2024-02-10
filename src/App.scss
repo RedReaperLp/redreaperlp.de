@@ -143,6 +143,22 @@ body {
   grid-area: footer;
 }
 
+@media (max-width: 1024px) {
+  :root {
+    --logo-grid-width: 80px;
+    --logo-width: 58px;
+    --name-grid-width: 180px;
+    --socials-grid-width: calc(100% - var(--logo-grid-width) - var(--name-grid-width));
+  }
+
+  .container {
+    grid-template-rows: 20%
+                        35%
+                        35%
+                        10%;
+  }
+}
+
 @media (max-width: 768px) {
   :root {
     --logo-grid-width: 60px;
